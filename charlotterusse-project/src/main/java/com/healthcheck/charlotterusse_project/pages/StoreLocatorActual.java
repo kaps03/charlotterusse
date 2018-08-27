@@ -36,7 +36,7 @@ public class StoreLocatorActual extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,7 +58,7 @@ public class StoreLocatorActual extends javax.swing.JFrame {
         	count++;
 		}
         
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(locationsName));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<String>(locationsName));
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -108,8 +108,7 @@ public class StoreLocatorActual extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        new Homepage().setVisible(true);
+        new Homepage(jComboBox1.getSelectedItem().toString()).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
