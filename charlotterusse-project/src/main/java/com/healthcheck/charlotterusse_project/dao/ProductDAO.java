@@ -1,7 +1,6 @@
 package com.healthcheck.charlotterusse_project.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,10 +15,10 @@ public class ProductDAO {
 
 	public ProductDTO getProducts(Integer skuNumber) throws SQLException {
 		Connection connection = DBConnection.getConnection();
-		Statement stmt = connection.createStatement();
-		ResultSet resultSet = stmt.executeQuery(Query.GET_ALL_PRODUCTS+skuNumber);
-		List<ProductDTO> list = new ArrayList<>();
-		if (resultSet != null) {
+		List<ProductDTO> list = new ArrayList<ProductDTO>();
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet resultSet = stmt.executeQuery(Query.GET_ALL_PRODUCTS + skuNumber);
 			ProductDTO product = null;
 			while (resultSet.next()) {
 				product = new ProductDTO();
@@ -31,12 +30,17 @@ public class ProductDAO {
 				product.setPromotionalEffectiveDate(resultSet.getDate(6));
 				product.setPromotionalExpireDate(resultSet.getDate(7));
 				product.setPromotion(resultSet.getString(8));
-				
+
 				list.add(product);
 			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			connection.close();
 		}
-		connection.close();
-		if(!list.isEmpty())
+
+		if (!list.isEmpty())
 			return list.get(0);
 		return null;
 	}
